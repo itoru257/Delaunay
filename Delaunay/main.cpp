@@ -45,6 +45,8 @@ int main(int argc, const char * argv[]) {
     // Make the window's context current
     glfwMakeContextCurrent(window);
     
+    glEnable(GL_DEPTH_TEST);
+    
     std::vector< Eigen::Vector2d > PointList;
     std::vector< std::vector< unsigned int > > IndexList;
     
@@ -105,13 +107,13 @@ int main(int argc, const char * argv[]) {
     wireframe.SetDrawMode( GL_LINES );
     
     wireframeProgram.SetColor( 1.0f, 1.0f, 1.0f );
-    wireframeProgram.SetDataMatrix( &wireframe, Eigen::Vector3f( 0.0f, 0.0f, 0.1f ) );
+    wireframeProgram.SetDataMatrix( &wireframe, Eigen::Vector3f( 0.0f, 0.0f, -0.1f ) );
     
     // Loop until the user closes the window
     while( !glfwWindowShouldClose( window ) ) {
         
         // Render
-        glClear( GL_COLOR_BUFFER_BIT );
+        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
         
         triangleProgram.UseProgram();
         triangle.Draw();
